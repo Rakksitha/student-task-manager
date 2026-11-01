@@ -1,0 +1,45 @@
+
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                echo 'Checking out source code'
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Preparing web application'
+                bat 'if not exist deploy mkdir deploy'
+                bat 'copy CD_WebApp\\index.html deploy\\index.html'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying application'
+                bat 'echo Application deployed successfully!'
+            }
+        }
+
+        stage('Verify') {
+            steps {
+                echo 'Verifying deployment'
+                bat 'if exist deploy\\index.html (echo Deployment successful) else (exit /b 1)'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'CD Pipeline completed successfully!'
+        }
+        failure {
+            echo 'CD Pipeline failed!'
+        }
+    }
+}
