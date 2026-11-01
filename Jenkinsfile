@@ -27,7 +27,7 @@ pipeline {
 
         stage('Package') {
             steps {
-                bat 'jar --create --file build\\student-task-manager.jar --main-class Main -C build Main.class'
+                bat '"C:\\Program Files\\Java\\jdk-21.0.12\\bin\\jar.exe" --create --file build\\student-task-manager.jar --main-class Main -C build Main.class'
                 echo 'JAR package created'
             }
         }
